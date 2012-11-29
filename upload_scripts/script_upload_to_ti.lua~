@@ -1,0 +1,41 @@
+#!/usr/bin/lua
+-- Ce programme cherche dans le fichier si il trouve
+-- la chaine :
+--Ti-mode="<folder>"
+-- Exemple : --Ti-mode="MyLibs"
+
+
+-- On vérifie qu'il y a le bon nombre d'arguments :
+if #arg~=1 then
+   print"Usage: ./build.lua infile.lua"
+   os.exit(0)
+else
+   -- On associe les. noms, ou on affiche un message d'erreur :
+   filename = assert(arg[1], "You need to specify an input file name !")
+end
+
+
+-- Mettre le fichier dans la chaine "file"
+file = io.open(filename, "r")
+folder=nil
+while true do
+        line = file:read()
+        if not line then break end
+
+        a,b,tempfolder = string.find(line, '%-%-Ti%-mode="(.+)"')
+	if tempfolder~=nil
+	then
+	   folder=tempfolder
+	   break
+	end
+	
+end
+
+-- Appeler fonction qui envoie le fichier
+if folder~=nil
+then
+   os.execute("./nomfichier filename folder")
+else
+   print("Attention pas de dossier de sortie")
+   os.execute("./nomfichier filename folder")
+end
